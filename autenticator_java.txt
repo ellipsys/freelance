@@ -1,0 +1,38 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
+import java.net.URL;
+import java.net.URLConnection;
+import javax.swing.JOptionPane;
+ 
+public class Main {
+   public static void main(String[] args)
+    throws MalformedURLException, IOException {
+ 
+      URL url = new URL("http://190.146.246.139:8080/wlanPrimaryNetwork.asp");
+      URLConnection con = url.openConnection();
+ 
+      Authenticator au = new Authenticator() {
+        
+         protected PasswordAuthentication
+            getPasswordAuthentication() {
+            return new PasswordAuthentication
+               ("admin", "Uq-4GIt3M".toCharArray());
+         }
+      };
+      Authenticator.setDefault(au);
+ 
+      BufferedReader in = new BufferedReader(
+         new InputStreamReader(con.getInputStream()));
+ 
+      String linea;
+      
+      while ((linea = in.readLine()) != null) {
+         System.out.println(linea);
+         //JOptionPane.showMessageDialog(null,linea);
+      }
+   }
+}
